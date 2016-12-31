@@ -21,15 +21,15 @@
 /*
  * Board identifier.
  */
-#define BOARD_LOAD_REV_A
-#define BOARD_NAME              "el_load Rev. A"
+#define BOARD_STORM32_v1_3
+#define BOARD_NAME              "SToRM32 v1.3"
 
 /*
  * Board frequencies.
  */
 #define STM32_LSECLK            0
 
-#define STM32_HSECLK            16000000
+#define STM32_HSECLK            8000000
 /*#define STM32_HSE_BYPASS*/
 
 
@@ -41,15 +41,8 @@
 /*
  * IO pins assignments.
  */
-#define GPIOC_LED1	            0
-#define GPIOC_LED2		        1
-#define GPIOC_THROTTLE_SERVO    5
-#define GPIOA_RPM               8
-
-#define EEPROM_ADDRESS  0x50
-#define EEPROM_SIZE     4096 //bytes
-#define EEPROM_PAGE_SIZE 32 //bytes
-#define EEPROM_BUS      I2CD1
+#define GPIOB_LED0	            12
+#define GPIOB_LED1		        13
 
 
 /*
@@ -79,60 +72,74 @@
 /*
  * Port A setup.
  * Everything input with pull-up except:
- * PA0  - Push Pull output           (AUX1).
- * PA1  - Digital input with pull down().
- * PA2  - Push Pull output           (CURR_PWM).
- * PA3  - Push Pull output           (AUX2).
- * PA4  - Alternate Open Drain output(CURR_DAC).
- * PA5  - Alternate Push Pull output (SCK_1).
- * PA6  - Analog                     (VOLTAGE).
- * PA7  - Alternate Push Pull output (MOSI_1).
- * PA8  - Digital input              (RPM).
- * PA9  - Digital input              (EN_B).
- * PA10 - Digital input              (EN_SW).
- * PA11 - Digital input with PullUp  (CAN_RX).
- * PA12 - Alternate Push Pull output (CAN_TX).
+ * PA0  - Alternate Push Pull output 2MHz   (IR).
+ * PA1  - Alternate Push Pull output 2MHz   (MOT_B2).
+ * PA2  - Alternate Push Pull output 2MHz   (MOT_C1).
+ * PA3  - Alternate Push Pull output 2MHz   (MOT_B1).
+ * PA4  - Digital input with Pull down      (NC).
+ * PA5  - Battery voltage measurement       (LIPO).
+ * PA6  - Alternate Push Pull output 2MHz   (MOT_A1).
+ * PA7  - Alternate Push Pull output 2MHz   (MOT_C0).
+ * PA8  - Digital input with Pull up        (RC2).
+ * PA9  - Digital input with Pull up        (RC1/TX).
+ * PA10 - Digital input with Pull up        (RC0/RX).
+ * PA11 - Push Pull output 2MHz             (USB-DM).
+ * PA12 - Push Pull output 2MHz             (USB-DP).
+ * PA13 - Push Pull output 2MHz             (SWDIO).
+ * PA14 - Push Pull output 2MHz             (SWCLK).
+ * PA15 - Push Pull output 2MHz             (AUX2).
  */
-#define VAL_GPIOACRL            0x80BF1181      /*  PA7...PA0 */
-#define VAL_GPIOACRH            0x888B8488      /* PA15...PA8 */
-#define VAL_GPIOAODR            0xFFFFFCFF
+#define VAL_GPIOACRL            0xAA08AAAA      /*  PA7...PA0 */
+#define VAL_GPIOACRH            0x22222888      /* PA15...PA8 */
+#define VAL_GPIOAODR            0xFFFF0701
 
 /*
  * Port B setup.
  * Everything input with pull-up except:
- * PB0  - Alternate Push Pull output (SERVO_THROTTLE).
- * PB1  - Push Pull output           (LCD_DC).
- * PB2  - Push Pull output           (AUX3).
- * PB6  - Alternate Open Drain output(UART_TX_1).
- * PB7  - Digital input              (UART_RX_1).
- * PB8  - Alternate Open Drain output(SCL_1).
- * PB9  - Alternate Open Drain output(SDA_1).
- * PB10 - Push Pull output           (AUX4).
- * PB11 - Push Pull output           (T_CS).
- * PB12 - Push Pull output           (SC_CS).
- * PB13 - Alternate Push Pull output (SCK_2).
- * PB14 - Digital input with Push    (MISO_2).
- * PB15 - Alternate Push Pull output (MOSI_2).
+ * PB0  - Alternate Push Pull output 2MHz   (MOT_B0).
+ * PB1  - Alternate Push Pull output 2MHz   (MOT_A0).
+ * PB2  - Digital input                     (BOOT1).
+ * PB3  - Digital input with Pull down      (NC).
+ * PB4  - Digital input with Pull down      (NC).
+ * PB5  - Digital input with PullUp         (USB-D).
+ * PB6  - Open Drain output 10MHz           (SCL#2).
+ * PB7  - Open Drain output 10MHz           (SDA#2).
+ * PB8  - Alternate Push Pull output 2MHz   (MOT_C2).
+ * PB9  - Alternate Push Pull output 2MHz   (MOT_A2).
+ * PB10 - Open Drain output 10MHz           (SCL).
+ * PB11 - Open Drain output 10MHz           (SDA).
+ * PB12 - Push Pull output 2MHz             (LED0).
+ * PB13 - Push Pull output 2MHz             (LED1).
+ * PB14 - Push Pull output 2MHz             (AUX0).
+ * PB15 - Push Pull output 2MHz             (AUX1).
  */
-#define VAL_GPIOBCRL            0x4B88811A      /*  PB7...PB0 */
-#define VAL_GPIOBCRH            0xB8B331FF      /* PB15...PB8 */
-#define VAL_GPIOBODR            0xFFFFFFFF
+#define VAL_GPIOBCRL            0x558884AA      /*  PB7...PB0 */
+#define VAL_GPIOBCRH            0x222255AA      /* PB15...PB8 */
+#define VAL_GPIOBODR            0xFFFF0CFC
 
 /*
  * Port C setup.
  * Everything input with pull-up except:
- * PC0  - Push Pull output           (LED_1).       
- * PC1  - Push Pull output           (LED_2).
- * PC2  - Analog input               (V_LOAD).
- * PC3  - Analog input               (CURR_MES).
- * PC5  - Push Pull output           ().
- * PC6  - Digital input with pullup  (RC_INPUT).
- * PC14 - Digital input               (OSC32).
- * PC15 - Digital input               (OSC32).
+ * PC0  - Analog input                      (POT0).
+ * PC1  - Analog input                      (POT1).
+ * PC2  - Analog input                      (POT2).
+ * PC3  - Digital input with PullUp         (BUT).
+ * PC4  - Push Pull output 2MHz             (XOR).
+ * PC5  - Digital input with PullDown       (NC).
+ * PC6  - Digital input with PullUp         (RC2-0).
+ * PC7  - Digital input with PullUp         (RC2-1).
+ * PC8  - Digital input with PullUp         (RC2-2).
+ * PC9  - Digital input with PullUp         (RC2-3).
+ * PC10 - Alternate Push Pull output 10MHz  (TX).
+ * PC11 - Digital input with PullUp         (RX).
+ * PC12 - Digital input with PullDown       (NC).
+ * PC13 - Digital input with PullDown       (NC).
+ * PC14 - Digital input with PullDown       (NC).
+ * PC15 - Digital input with PullDown       (NC).
  */
-#define VAL_GPIOCCRL            0x881A0011      /*  PC7...PC0 */
-#define VAL_GPIOCCRH            0x44888888      /* PC15...PC8 */
-#define VAL_GPIOCODR            0xFFFFFFBF
+#define VAL_GPIOCCRL            0x88828000      /*  PC7...PC0 */
+#define VAL_GPIOCCRH            0x88888988     /* PC15...PC8 */
+#define VAL_GPIOCODR            0xFFFF0FC8
 
 /*
  * Port D setup.
@@ -140,8 +147,8 @@
  * PD0  - Digital input (XTAL).
  * PD1  - Digital input (XTAL).
  */
-#define VAL_GPIODCRL            0x11111144      /*  PD7...PD0 */
-#define VAL_GPIODCRH            0x11111111      /* PD15...PD8 */
+#define VAL_GPIODCRL            0x22222144      /*  PD7...PD0 */
+#define VAL_GPIODCRH            0x22222222      /* PD15...PD8 */
 #define VAL_GPIODODR            0xFFFFFFFF
 
 /*
