@@ -183,5 +183,8 @@ CWARN = -Wall -Wextra -Wundef -Wstrict-prototypes
 # Define C++ warning options here
 CPPWARN = -Wall -Wextra -Wundef
 
+# List all user libraries here
+ULIBS = -lm
+
 RULESPATH = $(CHIBIOS)/os/common/ports/ARMCMx/compilers/GCC
 include $(RULESPATH)/rules.mk
