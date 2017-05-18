@@ -56,11 +56,15 @@ int main(void) {
     NULL);
 
     float angle = 0;
+    uint32_t test = 0;
     while (TRUE) {
-        pwmEnableChannel(&PWMD3, 3, 5000 + 2500*sinf(angle));
-        pwmEnableChannel(&PWMD3, 2, 5000 + 2500*sinf(angle - M_2PI_3));
-        pwmEnableChannel(&PWMD3, 1, 5000 + 2500*sinf(angle + M_2PI_3));
-        angle += 0.1f;
-        chThdSleepMilliseconds(100);
+        if(angle < 1*M_PI) {
+            test = 2500*sinf(angle);
+            pwmEnableChannel(&PWMD3, 3, 5000 + 2500*sinf(angle));
+            pwmEnableChannel(&PWMD3, 2, 5000 + 2500*sinf(angle - M_2PI_3));
+            pwmEnableChannel(&PWMD3, 1, 5000 + 2500*sinf(angle + M_2PI_3));
+            angle += 0.01f;
+        }
+        chThdSleepMilliseconds(5);
     }
 }
